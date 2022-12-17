@@ -239,7 +239,7 @@
             this.outputFunctionCombo.Name = "outputFunctionCombo";
             this.outputFunctionCombo.Size = new System.Drawing.Size(156, 23);
             this.outputFunctionCombo.TabIndex = 4;
-            this.outputFunctionCombo.SelectedIndexChanged += new System.EventHandler(this.outputKeyCombo_SelectedIndexChanged);
+            this.outputFunctionCombo.SelectedIndexChanged += new System.EventHandler(this.outputFunctionCombo_SelectedIndexChanged);
             // 
             // label7
             // 
@@ -289,7 +289,7 @@
             this.outputKeyCombo.Name = "outputKeyCombo";
             this.outputKeyCombo.Size = new System.Drawing.Size(267, 23);
             this.outputKeyCombo.TabIndex = 4;
-            this.outputKeyCombo.SelectedIndexChanged += new System.EventHandler(this.outputKeyCombo_SelectedIndexChanged_1);
+            this.outputKeyCombo.SelectedIndexChanged += new System.EventHandler(this.outputKeyCombo_SelectedIndexChanged);
             // 
             // outputCommandTextBox
             // 

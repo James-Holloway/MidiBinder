@@ -34,6 +34,7 @@ namespace MidiBinder
             this.Name = name;
         }
 
+        // Executes the midi binding, called when the matching midi note was pressed
         internal void Execute()
         {
             if (out_Function == BindingFunction.None)
@@ -77,6 +78,7 @@ namespace MidiBinder
                     }
 
                     WaveStream provider;
+                    // Change the provider based on the file type
                     if (soundFile.Extension == ".mp3")
                     {
                         provider = new Mp3FileReader(soundFile.FullName);

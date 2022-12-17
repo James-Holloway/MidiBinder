@@ -17,6 +17,7 @@ namespace MidiBinder
 
         internal static IMidiInput midiInput;
 
+        // Opens the midi input port with the selected device from the mainform
         public static void OpenMidiInput()
         {
             if (midiInput != null)
@@ -26,6 +27,7 @@ namespace MidiBinder
         }
 
         internal static bool gettingNextNote = false;
+        // Changes the message received event handler so the next Midi note input is set to the note updown box (uses NextNote_MessageReceived)
         public static void GetNextNote()
         {
             if (MainForm.SelectedMidiDevice == null)
@@ -37,6 +39,7 @@ namespace MidiBinder
             midiInput.MessageReceived += NextNote_MessageReceived;
         }
 
+        // Cancels the GetNextNote command by replacing the message received event handler with the default
         public static void CancelGetNextNote()
         {
             if (!gettingNextNote)
@@ -47,6 +50,7 @@ namespace MidiBinder
             gettingNextNote = false;
         }
 
+        // Used by GetNextNote to get the next note and set the current binding's in midi note
         private static void NextNote_MessageReceived(object? sender, MidiReceivedEventArgs e)
         {
             if (e.Data[0] == MidiEvent.NoteOn)
@@ -62,6 +66,7 @@ namespace MidiBinder
             }
         }
 
+        // Main event to handle midi input and execute the binding
         private static void HandleMidiInput_MessageReceived(object? sender, MidiReceivedEventArgs e)
         {
             if (e.Data[0] == MidiEvent.NoteOn)
