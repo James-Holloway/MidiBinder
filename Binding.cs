@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Media;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using NAudio.Wave;
 using WindowsInput;
 using WindowsInput.Native;
 
@@ -17,10 +19,12 @@ namespace MidiBinder
         public int in_MidiNote = 0;
 
         public BindingFunction out_Function = BindingFunction.Key;
-        public string out_Command = "";
         public VirtualKeyCode out_Key = VirtualKeyCode.CAPITAL;
+        public string out_Command = "";
+        public string out_SoundPath = "";
 
         public string Name;
+
         public Binding()
         {
 
@@ -34,10 +38,12 @@ namespace MidiBinder
         {
             if (out_Function == BindingFunction.None)
                 return;
+            // Key press
             else if (out_Function == BindingFunction.Key)
             {
                 inputSim.Keyboard.KeyPress(out_Key);
             }
+            // Command
             else if (out_Function == BindingFunction.Command)
             {
                 if (string.IsNullOrWhiteSpace(out_Command))
@@ -45,7 +51,7 @@ namespace MidiBinder
 
                 try
                 {
-                    string[] splitCommand = out_Command.Split(new char[0], 2);
+                    string[] splitCommand = out_Command.Split(new char[0], 2); // split
                     if (splitCommand.Length > 1)
                         Process.Start(splitCommand[0], splitCommand[1]);
                     else
@@ -54,6 +60,48 @@ namespace MidiBinder
                 catch (Exception ex)
                 {
                     MessageBox.Show($"Error while running command \"{out_Command}\" from {Name}:\r\n{ex.Message}", "MidiBinder command error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            // Sound play
+            else if (out_Function == BindingFunction.Sound)
+            {
+                if (string.IsNullOrWhiteSpace(out_SoundPath))
+                    return;
+
+                try
+                {
+                    FileInfo soundFile = new FileInfo(out_SoundPath);
+                    if (!soundFile.Exists)
+                    {
+                        throw new FileNotFoundException($"File not found");
+                    }
+
+                    WaveStream provider;
+                    if (soundFile.Extension == ".mp3")
+                    {
+                        provider = new Mp3FileReader(soundFile.FullName);
+                    }
+                    else if (soundFile.Extension == ".wav")
+                    {
+                        provider = new WaveFileReader(soundFile.FullName);
+                    }
+                    else
+                    {
+                        throw new FileFormatException("File type not supported");
+                    }
+
+                    WaveOutEvent player = new WaveOutEvent();
+                    player.Init(provider);
+                    player.PlaybackStopped += (obj, e) => {
+                        player.Dispose();
+                        provider.Dispose();
+                    };
+                    player.Play();
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error while playing sound \"{out_SoundPath}\" from {Name}:\r\n{ex.Message}", "MidiBinder sound error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -65,7 +113,7 @@ namespace MidiBinder
 
         public static string GetNoteName(int note)
         {
-            string octave = Math.Floor(note / 12d).ToString();
+            string octave = (Math.Floor(note / 12d) - 2).ToString();
             switch (note % 12)
             {
                 case 0:
@@ -103,5 +151,6 @@ namespace MidiBinder
         None,
         Key,
         Command,
+        Sound,
     }
 }

@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.Label label1;
+            this.label1 = new System.Windows.Forms.Label();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.midiDevicesCombo = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -43,16 +43,19 @@
             this.bindingPanel = new System.Windows.Forms.Panel();
             this.label5 = new System.Windows.Forms.Label();
             this.outputFunctionCombo = new System.Windows.Forms.ComboBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
+            this.browseSoundTextBox = new System.Windows.Forms.TextBox();
             this.outputKeyCombo = new System.Windows.Forms.ComboBox();
             this.outputCommandTextBox = new System.Windows.Forms.TextBox();
             this.bindingNameTextBox = new System.Windows.Forms.TextBox();
+            this.browseSoundButton = new System.Windows.Forms.Button();
             this.detectButton = new System.Windows.Forms.Button();
+            this.midiNoteLabel = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.noteNumericUpDown = new System.Windows.Forms.NumericUpDown();
-            this.midiNoteLabel = new System.Windows.Forms.Label();
-            label1 = new System.Windows.Forms.Label();
+            this.openSoundFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.flowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.flowLayoutPanel3.SuspendLayout();
@@ -63,17 +66,17 @@
             // 
             // label1
             // 
-            label1.Location = new System.Drawing.Point(0, 0);
-            label1.Margin = new System.Windows.Forms.Padding(0);
-            label1.Name = "label1";
-            label1.Padding = new System.Windows.Forms.Padding(5);
-            label1.Size = new System.Drawing.Size(200, 25);
-            label1.TabIndex = 2;
-            label1.Text = "MIDI Device Name";
+            this.label1.Location = new System.Drawing.Point(0, 0);
+            this.label1.Margin = new System.Windows.Forms.Padding(0);
+            this.label1.Name = "label1";
+            this.label1.Padding = new System.Windows.Forms.Padding(5);
+            this.label1.Size = new System.Drawing.Size(200, 25);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "MIDI Device Name";
             // 
             // flowLayoutPanel1
             // 
-            this.flowLayoutPanel1.Controls.Add(label1);
+            this.flowLayoutPanel1.Controls.Add(this.label1);
             this.flowLayoutPanel1.Controls.Add(this.midiDevicesCombo);
             this.flowLayoutPanel1.Controls.Add(this.label2);
             this.flowLayoutPanel1.Controls.Add(this.bindingsListView);
@@ -201,11 +204,14 @@
             this.bindingPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.bindingPanel.Controls.Add(this.label5);
             this.bindingPanel.Controls.Add(this.outputFunctionCombo);
+            this.bindingPanel.Controls.Add(this.label7);
             this.bindingPanel.Controls.Add(this.label6);
             this.bindingPanel.Controls.Add(this.label4);
+            this.bindingPanel.Controls.Add(this.browseSoundTextBox);
             this.bindingPanel.Controls.Add(this.outputKeyCombo);
             this.bindingPanel.Controls.Add(this.outputCommandTextBox);
             this.bindingPanel.Controls.Add(this.bindingNameTextBox);
+            this.bindingPanel.Controls.Add(this.browseSoundButton);
             this.bindingPanel.Controls.Add(this.detectButton);
             this.bindingPanel.Controls.Add(this.midiNoteLabel);
             this.bindingPanel.Controls.Add(this.label3);
@@ -229,16 +235,25 @@
             // outputFunctionCombo
             // 
             this.outputFunctionCombo.FormattingEnabled = true;
-            this.outputFunctionCombo.Location = new System.Drawing.Point(78, 66);
+            this.outputFunctionCombo.Location = new System.Drawing.Point(65, 66);
             this.outputFunctionCombo.Name = "outputFunctionCombo";
-            this.outputFunctionCombo.Size = new System.Drawing.Size(143, 23);
+            this.outputFunctionCombo.Size = new System.Drawing.Size(156, 23);
             this.outputFunctionCombo.TabIndex = 4;
             this.outputFunctionCombo.SelectedIndexChanged += new System.EventHandler(this.outputKeyCombo_SelectedIndexChanged);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(27, 161);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(68, 15);
+            this.label7.TabIndex = 5;
+            this.label7.Text = "Sound Path";
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(28, 130);
+            this.label6.Location = new System.Drawing.Point(31, 130);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(64, 15);
             this.label6.TabIndex = 5;
@@ -252,6 +267,18 @@
             this.label4.Size = new System.Drawing.Size(67, 15);
             this.label4.TabIndex = 5;
             this.label4.Text = "Output Key";
+            // 
+            // browseSoundTextBox
+            // 
+            this.browseSoundTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.browseSoundTextBox.Location = new System.Drawing.Point(101, 157);
+            this.browseSoundTextBox.Name = "browseSoundTextBox";
+            this.browseSoundTextBox.PlaceholderText = "Sound Path";
+            this.browseSoundTextBox.Size = new System.Drawing.Size(178, 23);
+            this.browseSoundTextBox.TabIndex = 3;
+            this.browseSoundTextBox.WordWrap = false;
+            this.browseSoundTextBox.TextChanged += new System.EventHandler(this.browseSoundTextBox_TextChanged);
             // 
             // outputKeyCombo
             // 
@@ -288,6 +315,17 @@
             this.bindingNameTextBox.WordWrap = false;
             this.bindingNameTextBox.TextChanged += new System.EventHandler(this.bindingNameTextBox_TextChanged);
             // 
+            // browseSoundButton
+            // 
+            this.browseSoundButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.browseSoundButton.Location = new System.Drawing.Point(285, 157);
+            this.browseSoundButton.Name = "browseSoundButton";
+            this.browseSoundButton.Size = new System.Drawing.Size(83, 23);
+            this.browseSoundButton.TabIndex = 2;
+            this.browseSoundButton.Text = "Browse...";
+            this.browseSoundButton.UseVisualStyleBackColor = true;
+            this.browseSoundButton.Click += new System.EventHandler(this.browseSoundButton_Click);
+            // 
             // detectButton
             // 
             this.detectButton.Location = new System.Drawing.Point(138, 31);
@@ -297,6 +335,15 @@
             this.detectButton.Text = "Detect";
             this.detectButton.UseVisualStyleBackColor = true;
             this.detectButton.Click += new System.EventHandler(this.detectButton_Click);
+            // 
+            // midiNoteLabel
+            // 
+            this.midiNoteLabel.AutoSize = true;
+            this.midiNoteLabel.Location = new System.Drawing.Point(227, 35);
+            this.midiNoteLabel.Name = "midiNoteLabel";
+            this.midiNoteLabel.Size = new System.Drawing.Size(32, 15);
+            this.midiNoteLabel.TabIndex = 1;
+            this.midiNoteLabel.Text = "[C 0]";
             // 
             // label3
             // 
@@ -320,14 +367,13 @@
             this.noteNumericUpDown.TabIndex = 0;
             this.noteNumericUpDown.ValueChanged += new System.EventHandler(this.noteNumericUpDown_ValueChanged);
             // 
-            // midiNoteLabel
+            // openSoundFileDialog
             // 
-            this.midiNoteLabel.AutoSize = true;
-            this.midiNoteLabel.Location = new System.Drawing.Point(227, 35);
-            this.midiNoteLabel.Name = "midiNoteLabel";
-            this.midiNoteLabel.Size = new System.Drawing.Size(32, 15);
-            this.midiNoteLabel.TabIndex = 1;
-            this.midiNoteLabel.Text = "[C 0]";
+            this.openSoundFileDialog.AddToRecent = false;
+            this.openSoundFileDialog.DefaultExt = "wav";
+            this.openSoundFileDialog.Filter = "Sound files|*.wav;*.mp3|All Files|*.*";
+            this.openSoundFileDialog.Title = "MIDI Binder Sound Selection...";
+            this.openSoundFileDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.openSoundFileDialog_FileOk);
             // 
             // MainForm
             // 
@@ -377,5 +423,9 @@
         private Button saveButton;
         private Button loadButton;
         private Label midiNoteLabel;
+        private Label label7;
+        private TextBox browseSoundTextBox;
+        internal Button browseSoundButton;
+        internal OpenFileDialog openSoundFileDialog;
     }
 }

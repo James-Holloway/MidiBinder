@@ -99,12 +99,16 @@ namespace MidiBinder
             bindingPanel.Enabled = true;
 
             // Set the right side values
+            // Inputs
             bindingNameTextBox.Text = currentBinding.Name;
             noteNumericUpDown.Value = currentBinding.in_MidiNote;
-            outputKeyCombo.SelectedItem = currentBinding.out_Key;
-            outputFunctionCombo.SelectedItem = currentBinding.out_Function;
-            outputCommandTextBox.Text = currentBinding.out_Command;
             midiNoteLabel.Text = GetBindingNoteName();
+
+            // Outputs
+            outputFunctionCombo.SelectedItem = currentBinding.out_Function;
+            outputKeyCombo.SelectedItem = currentBinding.out_Key;
+            outputCommandTextBox.Text = currentBinding.out_Command;
+            browseSoundTextBox.Text = currentBinding.out_SoundPath;
 
             ChangeFunctionEnableState();
         }
@@ -156,6 +160,8 @@ namespace MidiBinder
 
             outputKeyCombo.Enabled = currentBinding.out_Function == BindingFunction.Key;
             outputCommandTextBox.Enabled = currentBinding.out_Function == BindingFunction.Command;
+            browseSoundButton.Enabled = currentBinding.out_Function == BindingFunction.Sound;
+            browseSoundTextBox.Enabled = currentBinding.out_Function == BindingFunction.Sound;
         }
 
         private void outputKeyCombo_SelectedIndexChanged_1(object sender, EventArgs e)
@@ -222,6 +228,28 @@ namespace MidiBinder
                 Midi.OpenMidiInput();
             }
             catch { }
+        }
+
+        private void browseSoundButton_Click(object sender, EventArgs e)
+        {
+            openSoundFileDialog.ShowDialog();
+        }
+
+        private void openSoundFileDialog_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (currentBinding == null)
+                return;
+
+            string filepath = openSoundFileDialog.FileName;
+            currentBinding.out_SoundPath = filepath;
+            browseSoundTextBox.Text = filepath;
+        }
+
+        private void browseSoundTextBox_TextChanged(object sender, EventArgs e)
+        {
+            if (currentBinding == null)
+                return;
+            currentBinding.out_SoundPath = browseSoundTextBox.Text;
         }
     }
 }
