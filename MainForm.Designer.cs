@@ -51,6 +51,7 @@
             this.detectButton = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.noteNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.midiNoteLabel = new System.Windows.Forms.Label();
             label1 = new System.Windows.Forms.Label();
             this.flowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
@@ -206,6 +207,7 @@
             this.bindingPanel.Controls.Add(this.outputCommandTextBox);
             this.bindingPanel.Controls.Add(this.bindingNameTextBox);
             this.bindingPanel.Controls.Add(this.detectButton);
+            this.bindingPanel.Controls.Add(this.midiNoteLabel);
             this.bindingPanel.Controls.Add(this.label3);
             this.bindingPanel.Controls.Add(this.noteNumericUpDown);
             this.bindingPanel.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -299,7 +301,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(5, 33);
+            this.label3.Location = new System.Drawing.Point(5, 35);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(61, 15);
             this.label3.TabIndex = 1;
@@ -316,7 +318,16 @@
             this.noteNumericUpDown.Name = "noteNumericUpDown";
             this.noteNumericUpDown.Size = new System.Drawing.Size(54, 23);
             this.noteNumericUpDown.TabIndex = 0;
-            this.noteNumericUpDown.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
+            this.noteNumericUpDown.ValueChanged += new System.EventHandler(this.noteNumericUpDown_ValueChanged);
+            // 
+            // midiNoteLabel
+            // 
+            this.midiNoteLabel.AutoSize = true;
+            this.midiNoteLabel.Location = new System.Drawing.Point(227, 35);
+            this.midiNoteLabel.Name = "midiNoteLabel";
+            this.midiNoteLabel.Size = new System.Drawing.Size(32, 15);
+            this.midiNoteLabel.TabIndex = 1;
+            this.midiNoteLabel.Text = "[C 0]";
             // 
             // MainForm
             // 
@@ -365,5 +376,6 @@
         private FlowLayoutPanel flowLayoutPanel3;
         private Button saveButton;
         private Button loadButton;
+        private Label midiNoteLabel;
     }
 }

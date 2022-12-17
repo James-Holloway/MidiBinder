@@ -31,7 +31,9 @@ namespace MidiBinder
             {
                 midiDevicesCombo.Items.Add($"{device.Name} ({device.Id})");
             }
-            midiDevicesCombo.SelectedIndex = 0;
+            if (midiDevicesCombo.Items.Count > 0)
+                midiDevicesCombo.SelectedIndex = 0;
+
             try
             {
                 Midi.OpenMidiInput();
@@ -71,6 +73,14 @@ namespace MidiBinder
             RegenerateBindingsList();
         }
 
+        private string GetBindingNoteName()
+        {
+            if (currentBinding == null)
+                return "[?]";
+
+            return $"[{currentBinding.GetNoteName()}]";
+        }
+
         private void bindingsListView_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (bindingsListView.SelectedIndices.Count < 1)
@@ -80,6 +90,7 @@ namespace MidiBinder
                 // Reset right side values
                 bindingNameTextBox.Text = string.Empty;
                 noteNumericUpDown.Value = 0;
+                midiNoteLabel.Text = GetBindingNoteName();
                 Midi.CancelGetNextNote();
                 return;
             }
@@ -93,15 +104,17 @@ namespace MidiBinder
             outputKeyCombo.SelectedItem = currentBinding.out_Key;
             outputFunctionCombo.SelectedItem = currentBinding.out_Function;
             outputCommandTextBox.Text = currentBinding.out_Command;
+            midiNoteLabel.Text = GetBindingNoteName();
 
             ChangeFunctionEnableState();
         }
 
-        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        private void noteNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
             if (currentBinding == null)
                 return;
             currentBinding.in_MidiNote = (int)Math.Floor(noteNumericUpDown.Value);
+            midiNoteLabel.Text = GetBindingNoteName();
         }
 
         private void detectButton_Click(object sender, EventArgs e)
@@ -162,16 +175,21 @@ namespace MidiBinder
 
         private void saveButton_Click(object sender, EventArgs e)
         {
-            XmlSerializer serializer = new XmlSerializer(bindings.GetType());
-            using (TextWriter writer = new StreamWriter(filename))
-            {
-                serializer.Serialize(writer, bindings);
-            }
+            SaveXMLBindings();
         }
 
         private void loadButton_Click(object sender, EventArgs e)
         {
             LoadXMLBindings();
+        }
+
+        private void SaveXMLBindings()
+        {
+            XmlSerializer serializer = new XmlSerializer(bindings.GetType());
+            using (TextWriter writer = new StreamWriter(filename))
+            {
+                serializer.Serialize(writer, bindings);
+            }
         }
 
         private void LoadXMLBindings()
