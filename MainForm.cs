@@ -29,24 +29,38 @@ namespace MidiBinder
         // Setup of the midi devices, comboboxes and attempts to load xml bindings
         private void MainForm_Load(object sender, EventArgs e)
         {
-            devices = Midi.GetDevices().ToList();
-            foreach (var device in devices)
-            {
-                midiDevicesCombo.Items.Add($"{device.Name} ({device.Id})");
-            }
-            if (midiDevicesCombo.Items.Count > 0)
-                midiDevicesCombo.SelectedIndex = 0;
-
-            try
-            {
-                Midi.OpenMidiInput();
-            }
-            catch { }
+            RefreshDevices();
 
             outputFunctionCombo.DataSource = Enum.GetValues(typeof(BindingFunction));
             outputKeyCombo.DataSource = Enum.GetValues(typeof(VirtualKeyCode));
 
             LoadXMLBindings();
+        }
+
+        private void RefreshDevices()
+        {
+            int prevSelected = 0;
+            if (midiDevicesCombo.Items.Count > 0 && midiDevicesCombo.SelectedIndex != -1)
+            {
+                prevSelected = midiDevicesCombo.SelectedIndex;
+            }
+
+            devices = Midi.GetDevices().ToList();
+            midiDevicesCombo.Items.Clear();
+            midiDevicesCombo.SelectedText = string.Empty;
+            midiDevicesCombo.Text = string.Empty;
+            foreach (var device in devices)
+            {
+                midiDevicesCombo.Items.Add($"{device.Name} ({device.Id})");
+            }
+            if (midiDevicesCombo.Items.Count > 0)
+                midiDevicesCombo.SelectedIndex = prevSelected;
+
+            try
+            {
+                Midi.ReopenMidiInput();
+            }
+            catch {}
         }
 
         // Used for updating the name of the binding
@@ -64,7 +78,8 @@ namespace MidiBinder
             foreach (int oldIndex in oldIndicies)
                 bindingsListView.SelectedIndices.Add(oldIndex);
 
-            bindingsListView.FocusedItem = bindingsListView.Items[previouslyFocusedItem];
+            if (bindingsListView.Items.Count > 0)
+                bindingsListView.FocusedItem = bindingsListView.Items[Math.Min(previouslyFocusedItem, bindingsListView.Items.Count - 1)];
 
         }
 
@@ -291,6 +306,11 @@ namespace MidiBinder
         {
             this.Show();
             trayNotifyIcon.Visible = false;
+        }
+
+        private void refreshDevicesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RefreshDevices();
         }
     }
 }

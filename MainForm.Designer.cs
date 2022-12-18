@@ -35,6 +35,7 @@
             this.midiDevicesCombo = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.bindingsListView = new System.Windows.Forms.ListView();
+            this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.addBindingButton = new System.Windows.Forms.Button();
             this.deleteBindingButton = new System.Windows.Forms.Button();
@@ -61,7 +62,7 @@
             this.trayNotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.mainContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.minimiseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
+            this.refreshDevicesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.flowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.flowLayoutPanel3.SuspendLayout();
@@ -134,6 +135,11 @@
             this.bindingsListView.UseCompatibleStateImageBehavior = false;
             this.bindingsListView.View = System.Windows.Forms.View.Details;
             this.bindingsListView.SelectedIndexChanged += new System.EventHandler(this.bindingsListView_SelectedIndexChanged);
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "Name";
+            this.columnHeader1.Width = 150;
             // 
             // flowLayoutPanel2
             // 
@@ -397,23 +403,26 @@
             // mainContextMenuStrip
             // 
             this.mainContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.refreshDevicesToolStripMenuItem,
             this.minimiseToolStripMenuItem});
             this.mainContextMenuStrip.Name = "mainContextMenuStrip";
             this.mainContextMenuStrip.ShowImageMargin = false;
-            this.mainContextMenuStrip.Size = new System.Drawing.Size(136, 26);
+            this.mainContextMenuStrip.Size = new System.Drawing.Size(156, 70);
             this.mainContextMenuStrip.Text = "Window";
             // 
             // minimiseToolStripMenuItem
             // 
             this.minimiseToolStripMenuItem.Name = "minimiseToolStripMenuItem";
-            this.minimiseToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
+            this.minimiseToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
             this.minimiseToolStripMenuItem.Text = "Minimise to tray";
             this.minimiseToolStripMenuItem.Click += new System.EventHandler(this.minimiseToolStripMenuItem_Click);
             // 
-            // columnHeader1
+            // refreshDevicesToolStripMenuItem
             // 
-            this.columnHeader1.Text = "Name";
-            this.columnHeader1.Width = 150;
+            this.refreshDevicesToolStripMenuItem.Name = "refreshDevicesToolStripMenuItem";
+            this.refreshDevicesToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.refreshDevicesToolStripMenuItem.Text = "Refresh devices";
+            this.refreshDevicesToolStripMenuItem.Click += new System.EventHandler(this.refreshDevicesToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -474,5 +483,6 @@
         private ContextMenuStrip mainContextMenuStrip;
         private ToolStripMenuItem minimiseToolStripMenuItem;
         private ColumnHeader columnHeader1;
+        private ToolStripMenuItem refreshDevicesToolStripMenuItem;
     }
 }

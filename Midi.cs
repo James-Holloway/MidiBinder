@@ -20,10 +20,22 @@ namespace MidiBinder
         // Opens the midi input port with the selected device from the mainform
         public static void OpenMidiInput()
         {
-            if (midiInput != null)
+            if (midiInput != null && midiInput.Connection == MidiPortConnectionState.Open)
                 return;
             midiInput = access.OpenInputAsync(MainForm.SelectedMidiDevice.Id).Result;
             midiInput.MessageReceived += HandleMidiInput_MessageReceived;
+        }
+        public static void ReopenMidiInput()
+        {
+            if (midiInput != null)
+            {
+                midiInput.CloseAsync();
+                while (midiInput.Connection == MidiPortConnectionState.Open)
+                {
+                    Thread.Sleep(100);
+                }
+            }
+            OpenMidiInput();
         }
 
         internal static bool gettingNextNote = false;
@@ -33,7 +45,7 @@ namespace MidiBinder
             if (MainForm.SelectedMidiDevice == null)
                 return;
 
-            OpenMidiInput();
+            // OpenMidiInput();
             gettingNextNote = true;
             midiInput.MessageReceived -= HandleMidiInput_MessageReceived;
             midiInput.MessageReceived += NextNote_MessageReceived;
