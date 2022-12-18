@@ -28,6 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.label1 = new System.Windows.Forms.Label();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.midiDevicesCombo = new System.Windows.Forms.ComboBox();
@@ -39,6 +41,7 @@
             this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
             this.saveButton = new System.Windows.Forms.Button();
             this.loadButton = new System.Windows.Forms.Button();
+            this.bindingNameTextBox = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.bindingPanel = new System.Windows.Forms.Panel();
             this.label5 = new System.Windows.Forms.Label();
@@ -49,19 +52,23 @@
             this.browseSoundTextBox = new System.Windows.Forms.TextBox();
             this.outputKeyCombo = new System.Windows.Forms.ComboBox();
             this.outputCommandTextBox = new System.Windows.Forms.TextBox();
-            this.bindingNameTextBox = new System.Windows.Forms.TextBox();
             this.browseSoundButton = new System.Windows.Forms.Button();
             this.detectButton = new System.Windows.Forms.Button();
             this.midiNoteLabel = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.noteNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.openSoundFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.trayNotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.mainContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.minimiseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
             this.flowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.flowLayoutPanel3.SuspendLayout();
             this.panel1.SuspendLayout();
             this.bindingPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.noteNumericUpDown)).BeginInit();
+            this.mainContextMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -115,6 +122,9 @@
             this.bindingsListView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.bindingsListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1});
+            this.bindingsListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.bindingsListView.Location = new System.Drawing.Point(0, 73);
             this.bindingsListView.Margin = new System.Windows.Forms.Padding(0);
             this.bindingsListView.MultiSelect = false;
@@ -122,7 +132,7 @@
             this.bindingsListView.Size = new System.Drawing.Size(200, 175);
             this.bindingsListView.TabIndex = 0;
             this.bindingsListView.UseCompatibleStateImageBehavior = false;
-            this.bindingsListView.View = System.Windows.Forms.View.List;
+            this.bindingsListView.View = System.Windows.Forms.View.Details;
             this.bindingsListView.SelectedIndexChanged += new System.EventHandler(this.bindingsListView_SelectedIndexChanged);
             // 
             // flowLayoutPanel2
@@ -189,6 +199,18 @@
             this.loadButton.UseVisualStyleBackColor = true;
             this.loadButton.Click += new System.EventHandler(this.loadButton_Click);
             // 
+            // bindingNameTextBox
+            // 
+            this.bindingNameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.bindingNameTextBox.Location = new System.Drawing.Point(5, 1);
+            this.bindingNameTextBox.Name = "bindingNameTextBox";
+            this.bindingNameTextBox.PlaceholderText = "Binding Name";
+            this.bindingNameTextBox.Size = new System.Drawing.Size(363, 23);
+            this.bindingNameTextBox.TabIndex = 3;
+            this.bindingNameTextBox.WordWrap = false;
+            this.bindingNameTextBox.TextChanged += new System.EventHandler(this.bindingNameTextBox_TextChanged);
+            // 
             // panel1
             // 
             this.panel1.Controls.Add(this.bindingPanel);
@@ -202,6 +224,7 @@
             // bindingPanel
             // 
             this.bindingPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.bindingPanel.Controls.Add(this.bindingNameTextBox);
             this.bindingPanel.Controls.Add(this.label5);
             this.bindingPanel.Controls.Add(this.outputFunctionCombo);
             this.bindingPanel.Controls.Add(this.label7);
@@ -210,7 +233,6 @@
             this.bindingPanel.Controls.Add(this.browseSoundTextBox);
             this.bindingPanel.Controls.Add(this.outputKeyCombo);
             this.bindingPanel.Controls.Add(this.outputCommandTextBox);
-            this.bindingPanel.Controls.Add(this.bindingNameTextBox);
             this.bindingPanel.Controls.Add(this.browseSoundButton);
             this.bindingPanel.Controls.Add(this.detectButton);
             this.bindingPanel.Controls.Add(this.midiNoteLabel);
@@ -303,18 +325,6 @@
             this.outputCommandTextBox.WordWrap = false;
             this.outputCommandTextBox.TextChanged += new System.EventHandler(this.outputCommandTextBox_TextChanged);
             // 
-            // bindingNameTextBox
-            // 
-            this.bindingNameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.bindingNameTextBox.Location = new System.Drawing.Point(5, 2);
-            this.bindingNameTextBox.Name = "bindingNameTextBox";
-            this.bindingNameTextBox.PlaceholderText = "Binding Name";
-            this.bindingNameTextBox.Size = new System.Drawing.Size(368, 23);
-            this.bindingNameTextBox.TabIndex = 3;
-            this.bindingNameTextBox.WordWrap = false;
-            this.bindingNameTextBox.TextChanged += new System.EventHandler(this.bindingNameTextBox_TextChanged);
-            // 
             // browseSoundButton
             // 
             this.browseSoundButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -375,13 +385,45 @@
             this.openSoundFileDialog.Title = "MIDI Binder Sound Selection...";
             this.openSoundFileDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.openSoundFileDialog_FileOk);
             // 
+            // trayNotifyIcon
+            // 
+            this.trayNotifyIcon.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.trayNotifyIcon.BalloonTipText = "Minimised";
+            this.trayNotifyIcon.BalloonTipTitle = "MIDI Binder";
+            this.trayNotifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("trayNotifyIcon.Icon")));
+            this.trayNotifyIcon.Text = "MIDI Binder";
+            this.trayNotifyIcon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.trayNotifyIcon_MouseDoubleClick);
+            // 
+            // mainContextMenuStrip
+            // 
+            this.mainContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.minimiseToolStripMenuItem});
+            this.mainContextMenuStrip.Name = "mainContextMenuStrip";
+            this.mainContextMenuStrip.ShowImageMargin = false;
+            this.mainContextMenuStrip.Size = new System.Drawing.Size(136, 26);
+            this.mainContextMenuStrip.Text = "Window";
+            // 
+            // minimiseToolStripMenuItem
+            // 
+            this.minimiseToolStripMenuItem.Name = "minimiseToolStripMenuItem";
+            this.minimiseToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
+            this.minimiseToolStripMenuItem.Text = "Minimise to tray";
+            this.minimiseToolStripMenuItem.Click += new System.EventHandler(this.minimiseToolStripMenuItem_Click);
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "Name";
+            this.columnHeader1.Width = 150;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(584, 306);
+            this.ContextMenuStrip = this.mainContextMenuStrip;
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.flowLayoutPanel1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(600, 345);
             this.Name = "MainForm";
             this.Text = "MIDI Binder";
@@ -393,6 +435,7 @@
             this.bindingPanel.ResumeLayout(false);
             this.bindingPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.noteNumericUpDown)).EndInit();
+            this.mainContextMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -427,5 +470,9 @@
         private TextBox browseSoundTextBox;
         internal Button browseSoundButton;
         internal OpenFileDialog openSoundFileDialog;
+        private NotifyIcon trayNotifyIcon;
+        private ContextMenuStrip mainContextMenuStrip;
+        private ToolStripMenuItem minimiseToolStripMenuItem;
+        private ColumnHeader columnHeader1;
     }
 }

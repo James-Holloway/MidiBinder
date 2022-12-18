@@ -53,13 +53,19 @@ namespace MidiBinder
         private void RegenerateBindingsList()
         {
             var oldIndicies = bindingsListView.SelectedIndices;
+            int previouslyFocusedItem = bindingsListView?.FocusedItem?.Index ?? 0;
+
             bindingsListView.Items.Clear();
             foreach (Binding binding in bindings)
             {
                 bindingsListView.Items.Add(binding.Name);
             }
+
             foreach (int oldIndex in oldIndicies)
                 bindingsListView.SelectedIndices.Add(oldIndex);
+
+            bindingsListView.FocusedItem = bindingsListView.Items[previouslyFocusedItem];
+
         }
 
         // "Add" button
@@ -272,6 +278,19 @@ namespace MidiBinder
             if (currentBinding == null)
                 return;
             currentBinding.out_SoundPath = browseSoundTextBox.Text;
+        }
+
+        private void minimiseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            trayNotifyIcon.ShowBalloonTip(500);
+            trayNotifyIcon.Visible = true;
+        }
+
+        private void trayNotifyIcon_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            this.Show();
+            trayNotifyIcon.Visible = false;
         }
     }
 }
